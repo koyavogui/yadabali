@@ -1,2 +1,2 @@
 # yadabali
-plateforme pour apprendre à préparer aux amateurs et experts.
+plateforme pour apprendre à préparer aux amateurs et aux experts.
