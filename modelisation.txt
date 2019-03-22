@@ -1,0 +1,27 @@
+rendre la cuisine facile a tous
+
+apprendre a tous a préparer
+
+1- les recettes
+2- ingrédiants
+3- marchands
+
+solution:
+
+apprenti choisi une recette, 
+recette contien mode de préparation et ingrédients, 
+ingrédient contient marchant qui l'as vendu
+
+Maitre ajoute recette,
+ajoute ingrédients,
+ajoute marchant de chaque ingrediants
+
+Admin gères tous 
+
+//
+acteurs
+
+Admin
+Apprenti
+Maitre
+
