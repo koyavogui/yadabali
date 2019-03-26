@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Enregistrement</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+                <legend>Formulaire enregistrement  Utilisateur</legend>
+            <form action="/query_user" method="POST" class="well">
+                <figcaption>
+                    <legend>Civilité</legend>
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" class="form-control"  name="nom_user">
+                        <span class="help-inline"> </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="prenom">Prenom</label>
+                        <input type="text" class="form-control" name="prenom_user">
+                        <span class="help-inline"> </span>
+                    </div>
+                </figcaption>
+                <figcaption>
+                    <legend>Adresse</legend>
+                    <div class="form-group">
+                        <label for="contact">Contact</label>
+                        <input type="text" class="form-control" name="contact_user">
+                        <span class="help-inline"> </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="commune">Commune</label>
+                        <input type="text" class="form-control" name="commune_user">
+                        <span class="help-inline"> </span>
+                    </div>
+                </figcaption>
+                <figcaption>
+                    <legend>Accès</legend>
+                    <div class="form-group">
+                        <label for="user">Nom d'utilisateur</label>
+                        <input type="text" class="form-control" name="user_user">
+                        <span class="help-inline"> </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" class="form-control" name="password_user">
+                        <span class="help-inline"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" name="photo_user" size="15" class="btn btn-default" />
+                    </div>
+                </figcaption>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Envoyer</button>                
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

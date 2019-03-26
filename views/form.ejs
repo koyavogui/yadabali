@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Enregistrement</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>                        
+                </button>
+                <a class="navbar-brand" href="#"><%= title %></a>
+              </div>
+              <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                  <li class="active"><a href="#">Acceuil</a></li>
+                  <li><a href="#">Recette</a></li>
+                  <li><a href="#">Marché</a></li>
+                  <li><a href="#">Marchand</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="/form"><span class="glyphicon glyphicon-user"></span> S'inscrire</a></li>
+                  <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Se Connecter</a></li>                  
+                </ul>
+              </div>
+            </div>
+          </nav>
+        <div class="row">
+                <legend>Formulaire enregistrement Maitre Cuisinier</legend>
+            <form action="/query" method="POST" class="well" id="form">
+                <figcaption>
+                    <legend>Civilité</legend>
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" class="form-control"  name="nom">
+                        <span class="help-inline"> </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="prenom">Prenom</label>
+                        <input type="text" class="form-control" name="prenom">
+                        <span class="help-inline"> </span>
+                    </div>
+                </figcaption>
+                <figcaption>
+                    <legend>Adresse</legend>
+                    <div class="form-group">
+                        <label for="contact">Contact</label>
+                        <input type="text" class="form-control" name="contact">
+                        <span class="help-inline"> </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="commune">Commune</label>
+                        <input type="text" class="form-control" name="commune">
+                        <span class="help-inline"> </span>
+                    </div>
+                </figcaption>
+                <figcaption>
+                        <legend>Type d'ulisateur</legend>
+                        <div class="form-group">
+                            <select name="type_user" id="type_user" onclick="myFunction()" class="form-control">
+                                <option value="apprenti"">Apprentit Cuisinier</option>
+                                <option value="maitre">Maitre Cuisinier</option>
+                                <option value="marchand" >Marchand</option>
+                            </select>
+                        </div>
+                </figcaption>  
+                <figcaption>
+                    <legend>Accès</legend>
+                    <div class="form-group">
+                        <label for="user">Nom d'utilisateur</label>
+                        <input type="text" class="form-control" name="user">
+                        <span class="help-inline"> </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" class="form-control" name="password">
+                        <span class="help-inline"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" name="photo" size="15" class="btn btn-default" />
+                    </div>
+                </figcaption>
+                        </div>
+                    </figcaption>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Envoyer</button>                
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function myFunction() {
+            var type_user = document.getElementById("type_user").value; 
+            var form = "";
+            switch (type_user) {
+                case 'apprenti':
+                    form = '/query_user';
+                    break;
+                case 'marchand':
+                    form = '/query_mhd';
+                    break;
+                case 'maitre':
+                    form = '/query';
+                    break
+                default:
+                    break;
+            }
+            console.log(form);
+            document.getElementById("form").action = form;                
+        }
+    </script>
+</body>
+</html>
