@@ -21,7 +21,39 @@ Admin gères tous
 //
 acteurs
 
-Admin
-Apprenti
-Maitre
+user (
+    nom, 
+    prenom, 
+    username, 
+    password, 
+    photo, 
+    contact, 
+    commune, // commune de chacun
+    recettes, // liste des recette apris par l'apprenti
+    role = ['admin','apprenti','maitre','marchant']
+    )
 
+Recette (
+    nom,
+    description,
+    calorie,
+    difficulte,
+    temps de cuissons,
+    nombre personne,
+    categorie,
+    maitre // maitre qui l'as écris
+ )
+
+Ingrediant(
+    nom,
+    calorie,
+    marchant
+)
+
+Categorie recette (
+    nom
+)
+
+Commune (
+    nom
+)

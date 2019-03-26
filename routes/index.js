@@ -2,13 +2,21 @@ var express = require('express');
 var router = express.Router();
 var formidable = require('formidable');
 var fs = require('fs');
+var path = require('path');
 var  session  = require('express-session');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-      res.render('index', { title: 'Yadabali', maitre : 'form_maitre' });
-    });
 
+router.get('/', function(req, res, next) {
+  res.sendFile(path.join(__dirname,'..','vue_app','dist','index.html'))
+  //res.render('index', { title: 'Yadabali', maitre : 'form_maitre' });
+});
+ /*
+router.get('/', function(req, res, next) {
+    res.sendFile(path.join(__dirname,'..','vue_app','dist','index.html'))
+    //res.render('index', { title: 'Yadabali', maitre : 'form_maitre' });
+    });
+   
     router.get('/form', function(requ, res, next) {
       res.render('form', { title: 'Yadabali', maitre : 'form_maitre' });
     });
@@ -28,43 +36,7 @@ router.get('/', function(req, res, next) {
         }
         
       });
-      // Telechargement ded l'image
-      /*var filetoupload = requ.body.photo
-      var form = new formidable.IncomingForm();
-      form.parse(req, function (err, fields, files) {
-      
-        var oldpath = files.filetoupload.path;
-        var newpath = '../public/image/' + files.filetoupload.name;
-        console.log(oldpath);
-        console.log(newpath);
-        console.log();
-        fs.rename(oldpath, newpath, function (err) {
-          if (err) throw err;
-          res.write('File uploaded and moved!');
-          res.end();
-        });
-      });
-      var  enregistrement  = {  
-                  nom  : requ.body.nom
-                ,  prenom : requ.body.prenom
-                ,  contact : requ.body.contact
-                ,  commune : requ.body.commune
-                ,  user : requ.body.user
-                ,  password :   requ.body.password
-                ,  photo : requ.body.photo
-                } ;
-                console.log(enregistrement);
-                
-      
-      let doc = await maitredb.insert ( enregistrement)  
-    
-      console.log(doc);
-      if (doc ) {
-        res.render('form_marchand:id');  
-      } else{
-        res.render('form_marchand:echec');
-      }*/
-    })
+         })
  
     // requete d'ajout de marchand
 
@@ -139,9 +111,9 @@ router.get('/', function(req, res, next) {
         //  newDoc n'a pas de clé appelée notToBeSaved puisque sa valeur était indéfinie
       
       console.log(doc);
-      /*if (maitre.insert) {
-        
-      }*/
+      
       res.render('form_utilisateur');
+      
 })
+*/
 module.exports = router;
