@@ -47,11 +47,25 @@
                     <b-row class="mb-2">
                         <b-col sm="3" class="text-sm-right"><b>Nom:</b></b-col>
                         <b-col>{{ row.item.nom }}</b-col>
+                        <b-col sm="3" class="text-sm-right"><b>Catégories :</b></b-col>
+                        <b-col>{{ row.item.categorie}}</b-col>
+                    </b-row>
+
+                    <b-row class="mb-2">
+                        <b-col sm="3" class="text-sm-right"><b>Difficulté:</b></b-col>
+                        <b-col>{{ row.item.difficulte }}</b-col>
+                        <b-col sm="3" class="text-sm-right"><b>Temps de Cuissons:</b></b-col>
+                        <b-col>{{ row.item.temps_de_cuissons}}</b-col>
                     </b-row>
 
                     <b-row class="mb-2">
                         <b-col sm="3" class="text-sm-right"><b>Description:</b></b-col>
                         <b-col>{{ row.item.description }}</b-col>
+                    </b-row>
+
+                    <b-row class="mb-2">
+                        <b-col sm="3" class="text-sm-right"><b>Calorie:</b></b-col>
+                        <b-col>{{ row.item.calorie}}</b-col>
                     </b-row>
 
                     <b-button size="sm" >supprimer</b-button>

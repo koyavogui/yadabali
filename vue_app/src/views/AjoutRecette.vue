@@ -1,71 +1,113 @@
 <template>
-  <div >
-    <div class="mt-1" >
-    <form class="well">
-      <div class="form-row">
-        <div class="form-group col-md-4">
-          <label for="nom">Nom Recette</label>
-          <input type="text" class="form-control" id="nom" placeholder="Nom Recette">
-        </div>
-        <div class="form-group col-md-4">
-          <label for="nombre_personne">Nombre personne</label>
-          <input type="text" class="form-control" id="nombre_personne" placeholder="Nombre personne">
-        </div>
-        <div class="form-group col-md-4">
-          <label for="Temps_de_cuissons" class="flabel-control">Temps de cuissons</label>
-          <input type="text" class="form-control" id="Temps_de_cuissons" placeholder="Temps de cuissons">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="description">Description</label>
-        <textarea class="form-control" id="description" rows="3"></textarea>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="Categorie">Categorie</label>
-          <select id="Categorie" class="form-control">
-            <option selected>Choose...</option>
-            <option>...</option>
-            <option>...</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div class="form-group col-md-6">
-          <label for="Ingredient">Ingrdient</label>
-          <select id="ingredient" class="form-control">
-            <option selected>Choose...</option>
-            <option>...</option>
-            <option>...</option>
-            <option>...</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group ">
-        <label>Difficulté</label>
-            <div class="row mx-1 ">
-                <div class="custom-control custom-radio col-md-4">
-                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                    <label class="custom-control-label text-success" for="customRadio1">facile</label>
-                </div>
-                <div class="custom-control custom-radio col-md-4">
-                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                    <label class="custom-control-label text-warning" for="customRadio2">Moyen</label>
-                </div>
-                <div class="custom-control custom-radio col-md-4">
-                    <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
-                    <label class="custom-control-label text-danger" for="customRadio3">Difficile</label>
-                </div>
-        </div>
-      </div>
-      <b-button  block class="btn btn-primary">Ajouter</b-button>
-    </form>
-  </div>
+  <div>
+    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+        <b-row>
+            <b-form-group 
+                md="4"
+                class="ml-3"
+                id="exampleInputGroup1"
+                label="Nom de la Recette"
+                label-for="exampleInput1"
+            >
+                <b-form-input
+                id="exampleInput1"
+                type="text"
+                v-model="form.nom"
+                required
+                placeholder="Nom de la recette" />
+            </b-form-group>
+            <b-form-group 
+                md="4"
+                class="ml-3"
+                id="exampleInputGroup1"
+                label="Nombre de Personne"
+                label-for="nombre_personne"
+            >
+                <b-form-input
+                id="exampleInput1"
+                type="text"
+                v-model="form.nombre_personne"
+                required
+                placeholder="Entrer le nombre" />
+            </b-form-group>
+        </b-row>
+        <b-form-group 
+                id="exampleInputGroup1"
+                label="Nombre de Personne"
+                label-for="nombre_personne"
+            >
+                <b-form-textarea
+                id="exampleInput1"
+                type="text"
+                v-model="form.nombre_personne"
+                required
+                placeholder="Entrer le nombre" />
+        </b-form-group>
+        <b-form-group id="exampleInputGroup3" label="Catégorie:" label-for="exampleInput3">
+        <b-form-select id="exampleInput3" :options="categorie" required v-model="form.categorie" />
+      </b-form-group>
+        <b-form-group label="Difficulté">
+            <b-form-radio-group v-model="selected" :options="options" plain name="plainInline" :state="state" class="text-primary" />
+        </b-form-group>
+        <b-form-group>
+            <b-form-file
+                v-model="file"
+                :state="Boolean(file)"
+                placeholder="Choose a file..."
+                drop-placeholder="Drop file here..."
+            />
+        </b-form-group>
+         <b-button type="submit" variant="primary">Submit</b-button>
+        <b-button type="reset" variant="danger">Reset</b-button>
+      
+    </b-form>
   </div>
 </template>
 
 <script>
 export default {
-
+    data() {
+      return {
+        form: {
+            nom : '',
+            description : '',
+            calorie : '',
+            difficulte : '',
+            temps_de_cuissons : '',
+            nombre_personne : '',
+            categorie: null,
+          selected: [],
+        },
+        categorie: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
+        selected: '',
+        options: [
+          { text: 'Facile', value: 'facile'},
+          { text: 'Moyen', value: 'moyen'},
+          { text: 'Difficile', value: 'Difficile', class : 'text-danger'}
+        ],
+        show: true
+        }
+      },
+    methods: {
+      onSubmit(evt) {
+        evt.preventDefault()
+        alert(JSON.stringify(this.form))
+      },
+      onReset(evt) {
+        evt.preventDefault()
+        /* Reset our form values */
+        this.form.email = ''
+        this.form.name = ''
+        this.form.food = null
+        this.form.checked = []
+        /* Trick to reset/clear native browser form validation state */
+        this.show = false
+        this.$nextTick(() => {
+          this.show = true
+        })
+      }
+    }
+     
 }
 </script>
 
