@@ -1,12 +1,12 @@
 <template>
     <div class="pr-5" >
-        <h4>Inscription</h4>
+        <legend>Inscription</legend>
         <div
         v-for="key in Object.keys(user)"
         :key="key"
         >
         <input 
-        class="mt-3 px-3"
+        class="mt-3 px-3 form-control"
         :type="key==='photo' ? 'file' : 'text'"
         v-model="user[key]" 
         :placeholder="key" />

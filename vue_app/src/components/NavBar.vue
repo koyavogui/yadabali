@@ -21,7 +21,7 @@
 
                 <b-nav-item-dropdown right  >
                 <!-- Using button-content slot -->
-                    <template slot="button-content"> <font-awesome-icon icon="user" ></font-awesome-icon> </template>
+                    <template slot="button-content"> <font-awesome-icon icon="eye" ></font-awesome-icon> </template>
                         
                     <div v-show="$store.state.logged" >
                         <b-dropdown-item href="#">Profile</b-dropdown-item>
