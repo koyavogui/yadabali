@@ -1,5 +1,5 @@
 <template>
-    <div class="pt-3 pl-2"  
+    <div class="pt-3 pl-2 mt-5"  
     style="text-align:left;height:98vh;" >
         <p>Type de recette</p>
         <b-nav vertical  >

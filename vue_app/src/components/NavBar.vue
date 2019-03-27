@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="fixed-top" >
         <div>
         <b-navbar toggleable="lg" type="dark" :style="{backgroundColor:$app.theme.primary}" >
             <b-navbar-brand @click="$store.state.left=true;$store.state.right=true;$router.push({name:'home'})" href="#">Ya Dabali</b-navbar-brand>
@@ -8,8 +8,8 @@
 
             <b-collapse is-nav id="nav_collapse" >
             <b-navbar-nav>
-                <b-nav-item>Recettes</b-nav-item>
-                <b-nav-item >Marché</b-nav-item>
+                <b-nav-item @click="$router.push({name:'recette'})"  >Recettes</b-nav-item>
+                <b-nav-item @click="$router.push({name:'recette'})" >Marché</b-nav-item>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
@@ -47,6 +47,7 @@
                         <div class="mt-3">
                             <b-button 
                             block
+                            @click="$router.push({name:'panel'})"
                             >
                             connexion
                             </b-button>

@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Registration from "./views/Registration"
-import Panel from "./views/panel"
-import Recette from "./views/recette"
-import ajoutrecette from "./views/ajoutrecette"
+import Panel from "./views/Panel"
+import Recette from "./views/Recette"
+import AjoutRecette from "./views/AjoutRecette"
 
 
 Vue.use(Router)
@@ -38,13 +38,13 @@ export default new Router({
     },
     {
       path : '/Recette',
-      name : 'Recette',
+      name : 'recette',
       component : Recette
    },
    {
      path : '/ajoutrecette',
      name : 'ajoutrecette',
-     component : ajoutrecette
+     component : AjoutRecette
    }
   ]
 })

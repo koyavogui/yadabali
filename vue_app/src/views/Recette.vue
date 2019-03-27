@@ -1,5 +1,8 @@
 <template>
+  <div class="mt-5" >
   <div>
+      <b-button class="ml-2 mt-4" @click="$router.push({name:'ajoutrecette'})"  >Ajouter une reccette</b-button>
+  </div>
   <div class="row">
     <div class="card col-md-3  mt-3 ml-4" style="width: 18rem;">
         <img src="" class="card-img-top" alt="..."style="height: 8rem;">

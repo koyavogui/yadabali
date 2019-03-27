@@ -1,6 +1,6 @@
 <template>
     <div 
-    class="pt-3 pl-2" 
+    class="mt-5 pt-3 pl-2" 
     style="
     text-align:center;
     height:98vh;
