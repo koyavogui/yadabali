@@ -1,6 +1,7 @@
 <template>
   <div>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+    <b-alert variant="success" show  v-show="success" >Recette créé avec succès</b-alert>
+    <b-form>
         <b-row>
             <b-form-group 
                 md="4"
@@ -12,7 +13,7 @@
                 <b-form-input
                 id="exampleInput1"
                 type="text"
-                v-model="form.nom"
+                v-model="recette.nom"
                 required
                 placeholder="Nom de la recette" />
             </b-form-group>
@@ -26,26 +27,66 @@
                 <b-form-input
                 id="exampleInput1"
                 type="text"
-                v-model="form.nombre_personne"
+                v-model="recette.nombre_personne"
                 required
                 placeholder="Entrer le nombre" />
             </b-form-group>
+            <b-form-group 
+                md="4"
+                class="ml-3"
+                id="calorie"
+                label="Calorie"
+                label-for="calorie"
+            >
+                <b-form-input
+                id="calorie"
+                type="text"
+                v-model="recette.calorie"
+                required
+                placeholder="Calorie" />
+            </b-form-group>
+            <b-form-group 
+                md="4"
+                class="ml-3"
+                id="temps_cuisson"
+                label="Temps de cuisson"
+                label-for="temps_cuisson"
+            >
+                <b-form-input
+                id="temps_cuisson"
+                type="text"
+                v-model="recette.temps_de_cuissons"
+                required
+                placeholder="Temps de cuisson" />
+            </b-form-group>
         </b-row>
+        <input 
+        class="mt-3 px-3 form-control"
+        type="file"
+        placeholder="Image recette" />
         <b-form-group 
-                id="exampleInputGroup1"
-                label="Nombre de Personne"
-                label-for="nombre_personne"
+                id="description"
+                label="Description"
+                label-for="description"
             >
                 <b-form-textarea
                 id="exampleInput1"
                 type="text"
-                v-model="form.nombre_personne"
+                v-model="recette.description"
                 required
-                placeholder="Entrer le nombre" />
+                placeholder="Description de la recette" />
         </b-form-group>
-        <b-form-group id="exampleInputGroup3" label="Catégorie:" label-for="exampleInput3">
-        <b-form-select id="exampleInput3" :options="categorie" required v-model="form.categorie" />
-      </b-form-group>
+        <b-form-group id="categorie" label="Catégorie:" label-for="exampleInput3">
+          <b-form-select id="exampleInput3" :options="categorie" required v-model="recette.categorie" />
+        </b-form-group>
+        <b-form-group label="Difficulté">
+            <b-form-radio-group 
+            v-model="recette.difficulte" 
+            :options="options" 
+            plain name="plainInline"  class="text-primary" />
+        </b-form-group>
+        <b-button :disabled="loading"  block variant="primary" @click="ajouterRecette" >Ajouter</b-button>
+      <!--
         <b-form-group label="Difficulté">
             <b-form-radio-group v-model="selected" :options="options" plain name="plainInline" :state="state" class="text-primary" />
         </b-form-group>
@@ -57,10 +98,11 @@
                 drop-placeholder="Drop file here..."
             />
         </b-form-group>
-         <b-button type="submit" variant="primary">Submit</b-button>
+        <b-button type="submit" variant="primary">Submit</b-button>
         <b-button type="reset" variant="danger">Reset</b-button>
-      
+      -->
     </b-form>
+    
   </div>
 </template>
 
@@ -68,7 +110,9 @@
 export default {
     data() {
       return {
-        form: {
+        loading:false,
+        success:false,
+        recette: {
             nom : '',
             description : '',
             calorie : '',
@@ -76,7 +120,8 @@ export default {
             temps_de_cuissons : '',
             nombre_personne : '',
             categorie: null,
-          selected: [],
+            image:'',
+            maitre:''
         },
         categorie: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
         selected: '',
@@ -89,22 +134,49 @@ export default {
         }
       },
     methods: {
-      onSubmit(evt) {
-        evt.preventDefault()
-        alert(JSON.stringify(this.form))
+      toBase64(file){
+            const frd = new FileReader()
+            frd.onload = () => {
+                try {
+                    this.recette.image = frd.result
+                    return true 
+                } catch (error) {
+                    return false
+                }
+            }
+            frd.readAsDataURL(file)
       },
-      onReset(evt) {
-        evt.preventDefault()
-        /* Reset our form values */
-        this.form.email = ''
-        this.form.name = ''
-        this.form.food = null
-        this.form.checked = []
-        /* Trick to reset/clear native browser form validation state */
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
+      async ajouterRecette(){
+            //this.loading = true
+            this.recette._showDetails=false
+            this.recette.maitre = this.$store.state.user.id
+            try {
+              this.toBase64(document.querySelector("input[type=file]").files[0])   
+              
+            } catch (error) {
+              
+            }
+            setTimeout(
+                async () => {
+                    let res = await this.$axios({
+                      method:'post',
+                      url:this.$app.dev_api.concat("recettes"),
+                      data:this.recette
+                    })
+                    this.loading = false
+                    this.success = true
+                    this.$root.$emit("add-recette",res.data)
+                    setTimeout(() => {
+                        this.success = false
+                    },1000)
+
+                },3000
+                )
+            setTimeout(() => {
+              this.success = false
+            },1000)
+        
+        
       }
     }
      

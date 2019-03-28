@@ -1,68 +1,20 @@
 <template>
-  <div class="mt-5" >
-  <div>
-      <b-button class="ml-2 mt-4" v-b-modal.addrecette  >Ajouter une reccette</b-button>
-  </div>
-        <b-modal hide-footer id="addrecette" title="Ajouter une recette">
-                <div>
-                    <ajout-recette />
-                </div>
-        </b-modal>
+  <div style="margin-top:100px" >
   <div class="row">
-    <div class="card col-md-3  mt-3 ml-4" style="width: 18rem;">
-        <img src="" class="card-img-top" alt="..."style="height: 8rem;">
+    <div 
+    v-for="(item,index) in items"
+    :key="'recette-item'.concat(index)"  
+    class="card col-md-3  mt-3 ml-4" style="width: 18rem;">
+        <img :src="item.image" class="card-img-top" alt="..." style="height: 8rem;">
         <div class="card-body">
-            <h5 class="card-title">Card </h5>
-            <p class="card-text">Some quick example text to build on</p>
-            <a href="#" class="btn btn-primary">Apprendre</a>
-        </div>
-    </div>
-    <div class="card col-md-3  mt-3 ml-4" style="width: 18rem;">
-        <img src="" class="card-img-top" alt="..."style="height: 8rem;">
-        <div class="card-body">
-            <h5 class="card-title">Card </h5>
-            <p class="card-text">Some quick example text to build on</p>
-            <a href="#" class="btn btn-primary">Apprendre</a>
-        </div>
-    </div>
-    <div class="card col-md-3  mt-3 ml-4" style="width: 18rem;">
-        <img src="" class="card-img-top" alt="..."style="height: 8rem;">
-        <div class="card-body">
-            <h5 class="card-title">Card </h5>
-            <p class="card-text">Some quick example text to build on</p>
-            <a href="#" class="btn btn-primary">Apprendre</a>
-        </div>
-    </div>
-    <div class="card col-md-3  mt-3 ml-4" style="width: 18rem;">
-        <img src="" class="card-img-top" alt="..."style="height: 8rem;">
-        <div class="card-body">
-            <h5 class="card-title">Card </h5>
-            <p class="card-text">Some quick example text to build on</p>
-            <a href="#" class="btn btn-primary">Apprendre</a>
-        </div>
-    </div>
-    <div class="card col-md-3  mt-3 ml-4" style="width: 18rem;">
-        <img src="" class="card-img-top" alt="..."style="height: 8rem;">
-        <div class="card-body">
-            <h5 class="card-title">Card </h5>
-            <p class="card-text">Some quick example text to build on</p>
-            <a href="#" class="btn btn-primary">Apprendre</a>
-        </div>
-    </div>
-    <div class="card col-md-3  mt-3 ml-4" style="width: 18rem;">
-        <img src="" class="card-img-top" alt="..."style="height: 8rem;">
-        <div class="card-body">
-            <h5 class="card-title">Card </h5>
-            <p class="card-text">Some quick example text to build on</p>
-            <a href="#" class="btn btn-primary">Apprendre</a>
-        </div>
-    </div>
-    <div class="card col-md-3  mt-3 ml-4" style="width: 18rem;">
-        <img src="" class="card-img-top" alt="..."style="height: 8rem;">
-        <div class="card-body">
-            <h5 class="card-title">Card </h5>
-            <p class="card-text">Some quick example text to build on</p>
-            <a href="#" class="btn btn-primary">Apprendre</a>
+            <h5 class="card-title">{{item.nom}}</h5>
+            <p class="card-text">{{item.description}}</p>
+            <p class="card-text">{{item.calorie}}</p>
+            <p class="card-text">{{item.difficulte}}</p>
+            <p class="card-text">{{item.temps_de_cuissons}}</p>
+            <p class="card-text">{{item.nombre_personne}}</p>
+            <p class="card-text">{{item.categorie}}</p>
+            <a href="#" @click="addRecette" v-show="!$store.state.user || ($store.state.user && $store.state.user.role === 'apprenti')  " class="btn btn-primary">Apprendre</a>
         </div>
     </div>    
   </div>
@@ -76,8 +28,16 @@ export default {
     components:{
         AjoutRecette
     },
+    async mounted(){
+        let res = await this.$axios({
+            method:'get',
+            url:this.$app.dev_api.concat("recettes"),
+        })
+        this.items = res.data
+    },
     data(){
         return {
+            items:[],
             recette:{
                 nom:'',
                 description:'',
@@ -87,8 +47,15 @@ export default {
                 nombre_personne:'',
                 categorie:''
             }
-             }
-}
+    }
+    },
+    methods:{
+        addRecette(){
+            if (!this.$store.state.user) {
+                this.$router.push({name:'registration'})
+            }
+        }
+    }
 }
 
 </script>

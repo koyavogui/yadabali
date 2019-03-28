@@ -2,8 +2,8 @@ import Vue from 'vue'
 
 Vue.prototype.$app = {
     dev:true,
-    dev_api:"http://localhost:3000/api/",
-    api:"/api/",
+    dev_api:"http://localhost:3001/",
+    api:"/",
     theme:{
         primary:"#027be3",
         secondary:"#26a69a",

@@ -31,6 +31,9 @@ export default {
     NavBar,
     LeftNav,
     RightNav
+  },
+  mounted(){
+    //this.$router.push({name:'recette'})
   }
 }
 </script>

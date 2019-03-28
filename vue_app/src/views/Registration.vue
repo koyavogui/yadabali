@@ -1,6 +1,8 @@
 <template>
     <div style="margin-top:100px" >
         <div class="pr-5 mt-5" >
+        <b-alert variant="success" show  v-show="success" >Utilisateur créé avec succès</b-alert>
+
         <legend>Inscription</legend>
         <div
         v-for="key in Object.keys(user)"
@@ -31,7 +33,7 @@
 
         </div>
         
-        <b-button class="mt-3" block  @click="inscription" >S'inscrire</b-button>
+        <b-button class="mt-3" block  @click="inscription"  :disabled="loading" >S'inscrire</b-button>
     </div>
     </div>
 </template>
@@ -43,6 +45,8 @@ export default {
     },
     data(){
         return {
+            success:false,
+            loading:false,
             user:{
                 nom:'',
                 prenom:'',
@@ -102,13 +106,31 @@ export default {
             }
             frd.readAsDataURL(file)
         },
-        async inscription(){
+        inscription(){
+            this.loading = true
+            
             this.toBase64(document.querySelector("input[type=file]").files[0])   
-            let res = await this.$axios({
-                method:'post',
-                url:this.$app.dev_api.concat("users"),
-                data:this.user
-            })
+            setTimeout(
+                async () => {
+                    await this.$axios({
+                        method:'post',
+                        url:this.$app.dev_api.concat("users"),
+                        data:this.user
+                    })
+                    this.loading = false
+                    this.success = true
+
+                    setTimeout(() => {
+                        this.success = false
+                    },1000)
+
+                    this.$store.commit("set_logged",true)
+                    this.$store.commit("set_user",this.user)
+                    this.$router.push({name:'panel'})
+                },3000
+            )
+            
+            //let res = 
             //console.log(this.user, this.$app, this.$axios);
             
         }

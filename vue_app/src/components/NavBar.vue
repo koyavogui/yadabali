@@ -8,8 +8,11 @@
 
             <b-collapse is-nav id="nav_collapse" >
             <b-navbar-nav>
+                <!--
                 <b-nav-item @click="$router.push({name:'recette'})"  >Recettes</b-nav-item>
+                
                 <b-nav-item @click="$router.push({name:'recette'})" >Marché</b-nav-item>
+                -->
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
@@ -19,13 +22,22 @@
                 <b-button size="sm" class="my-2 my-sm-0" type="submit">Recherche</b-button>
                 </b-nav-form>
 
+                <img 
+                v-show="$store.state.logged"
+                :src="$store.state.user ? $store.state.user.photo : ''" 
+                width="50" 
+                height="50" 
+                alt="" 
+                class="ml-3 mr-1 rounded-circle"
+                srcset="">
+
                 <b-nav-item-dropdown right  >
                 <!-- Using button-content slot -->
                     <template slot="button-content"> <font-awesome-icon icon="eye" ></font-awesome-icon> </template>
                         
                     <div v-show="$store.state.logged" >
-                        <b-dropdown-item href="#">Profile</b-dropdown-item>
-                        <b-dropdown-item href="#">Deconnexion</b-dropdown-item>
+                        <b-dropdown-item @click="$router.push({name:'panel'})" >Profile</b-dropdown-item>
+                        <b-dropdown-item @click="deconnexion" href="#">Deconnexion</b-dropdown-item>
                     </div>
                     
                     
@@ -47,7 +59,7 @@
                         <div class="mt-3">
                             <b-button 
                             block
-                            @click="$router.push({name:'panel'})"
+                            @click="connexion"
                             >
                             connexion
                             </b-button>
@@ -70,8 +82,6 @@
             </b-collapse>
         </b-navbar>
         </div>
-
-        
     </div>
 </template>
 
@@ -83,6 +93,32 @@ export default {
                 username:'',
                 password:''
             }
+        }
+    },
+    methods:{
+        async connexion(){
+            
+            let res = await this.$axios({
+                method:'get',
+                url:this.$app.dev_api.concat("users"),
+                params:{
+                        username:this.user.username,
+                        password:this.user.password
+                }
+            });
+
+            if (res.data.length === 1) {
+                this.$store.commit("set_logged",true)
+                this.$store.commit("set_user",res.data[0])
+                this.$router.push({name:'panel'})    
+            }
+
+            
+        },
+        deconnexion(){
+            this.$store.commit("set_logged",false)
+            this.$store.commit("set_user",null)
+            this.$router.push({name:'home'})    
         }
     }
 }

@@ -2,10 +2,10 @@
     <div class="col-md-11"  style="margin-top:100px" >
         <div class="row mt-2">
             <div class="col-md-3 alert alert-success">
-                One of three columns
-                <h4 class="alert-heading">Well done!</h4>
+                Bienvenue
+                <h4 class="alert-heading">Salut  {{$store.state.user.nom}} {{$store.state.user.prenom}} </h4>
                 <hr>
-                <p class="mb-0">Whenever you need to.</p>
+                <p class="mb-0">Chers {{$store.state.user.nom}} ceci est votre espace personnel.</p>
             </div>
             <div class="offset-md-1 col-md-4 alert alert-success">
                 One of three columns
@@ -86,6 +86,19 @@ export default {
     components:{
         AjoutRecette
     },
+    async mounted(){
+        //console.log(this.$store.state);
+        this.$root.$on("add-recette",this.addRecette)
+        let res = await this.$axios({
+            method:'get',
+            url:this.$app.dev_api.concat("recettes"),
+            params:{
+                maitre:this.$store.state.user.id
+            }
+        })
+        this.items = res.data
+        
+    },
     data(){
         return {
             recette:{
@@ -98,16 +111,6 @@ export default {
                 categorie:''
             },
             items: [
-                {
-                nom:'okf',
-                description:'fokf',
-                calorie:'ofkfl',
-                difficulte:'fokfl',
-                temps_de_cuissons:'fofko',
-                nombre_personne:'fofko',
-                categorie:'fokff',
-                _showDetails:false
-                }
             ],
             fields:['nom','description','calorie','difficulté','temps_de_cuissons','categorie']
         }
@@ -115,7 +118,9 @@ export default {
     methods:{
         onClickRow(props){
             props._showDetails = !props._showDetails
-            
+        },
+        addRecette(recette){
+            this.$set(this.items, this.items.length,recette)
         }
     }
 }
